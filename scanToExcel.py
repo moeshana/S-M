@@ -4,14 +4,21 @@ import pymysql
 from datetime import date
 import pandas as pd
 
-# START_WITH_NEW_TABLE = False
+# Drop table before starting scan if set up true.
+# START_WITH_NEW_TABLE = TRUE
 START_WITH_NEW_TABLE = False
+
 SKU_START_WITH = "X00"
 BAD_ITEM_MARKER = "BAD"
 END_SIGNAL = "QUIT"
 MULTI_COUNT = "*"
 RESULT_FILE_PATH = "results.csv"
 
+# mysql database name
+DATABASE_NAME = "vinmaxstock"
+# use your own user name and password for mysql
+USER_NAME = ""
+PASS_WORD = ""
 
 class PackageItem:
 
@@ -75,9 +82,9 @@ def write_to_file(db):
 
 def connect_to_db():
     db = pymysql.connect(host="localhost",
-                         user='root',
-                         password="wuhu1992",
-                         database="vinmaxstock")
+                         user=USER_NAME,
+                         password=PASS_WORD,
+                         database= DATABASE_NAME)
     cursor = db.cursor()
     if START_WITH_NEW_TABLE:
         cursor.execute("DROP TABLE IF EXISTS RETURNS")
